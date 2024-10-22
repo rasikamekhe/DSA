@@ -12,27 +12,29 @@ b)To check whether given string is palindrome or not */
 
 
 #include<iostream>
-#include<string.h> #define
-max 50 using namespace std;
+#include<string.h> 
+#define max 50 
+using namespace std;
 
 class STACK
 {
 private:
-char a[max];
-int top;
+  char a[max];
+  int top;
 public:
 STACK(){
 top=-1;
 }
+
 void push(char c){
 top++;
 a[top] = c;
-a[top+1]='\0';
+a[top+1]='\0';   //represents the end of a string
 cout<<endl<<c<<" is pushed in STACK!";
 }
+
 void reverse(){
 char str[max];
-
 cout<<"\n\nReverse string is : ";
 for(int i=top,j=0; i>=0; i--,j++){
 cout<<a[i];
@@ -40,6 +42,7 @@ str[j]=a[i];
 }
 cout<<endl;
 }
+
 void convert(char str[]){
 int j,k,len = strlen(str);
 for(j=0, k=0; j<len; j++){

@@ -35,7 +35,7 @@ display();
 
 void QUEUE::dequeue()
 {
-    if((rear==0 && rear==0)|| ( front==rear)){
+    if((front==0 && rear==0)|| ( front==rear)){
         temp=queue[front];
         front=rear=-1;
     }
@@ -43,7 +43,7 @@ void QUEUE::dequeue()
         temp=queue[front];
         front++;
     }
-    cout<<temp<<"is delted from queue!"<<endl;
+    cout<<temp<<" is deleted from queue!"<<endl;
     cout<<"\n Remaining elements are: "<<endl;
     display();
 }

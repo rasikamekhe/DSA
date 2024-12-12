@@ -4,88 +4,100 @@ droop” is a palindrome, as can be seen by examining the characters “poor dan
 droop” and observing that they are the same forward and backward. One way to check
 for a palindrome is to reverse the characters in the string and then compare with them
 the original-in a palindrome, the sequence will be identical. Write C++ program with
-
 functions-
 a)To print original string followed by reversed string using stack
-
 b)To check whether given string is palindrome or not */
 
 
-#include<iostream>
-#include<string.h> 
-#define max 50 
+#include <iostream>
+#include <cstring> // For strlen, strcmp
+#include <cctype>  // For islower, isupper
+#define MAX 50
 using namespace std;
 
-class STACK
-{
+class STACK {
 private:
-  char a[max];
-  int top;
-public:
-STACK(){
-top=-1;
-}
+    char a[MAX]; // Array to simulate the stack
+    int top;     
+    // Constructor 
+    STACK() {
+        top = -1;
+    }
 
-void push(char c){
-top++;
-a[top] = c;
-a[top+1]='\0';   //represents the end of a string
-cout<<endl<<c<<" is pushed in STACK!";
-}
+    // Method to push a character onto the stack
+    void push(char c) {
+        if (top >= MAX - 1) { // Check for stack overflow
+            cout << "\nStack Overflow! Cannot push more characters.";
+            return;
+        }
+        top++;          // Increment the top pointer
+        a[top] = c;     // Add the character to the stack
+        cout << c << " is pushed into the STACK!\n";
+    }
 
-void reverse(){
-char str[max];
-cout<<"\n\nReverse string is : ";
-for(int i=top,j=0; i>=0; i--,j++){
-cout<<a[i];
-str[j]=a[i];
-}
-cout<<endl;
-}
+    // Method to reverse and print the string using the stack
+    void reverse() {
+        cout << "\nReverse string is: ";
+        // Traverse the stack from top to bottom
+        for (int i = top; i >= 0; i--) {
+            cout << a[i]; // Print characters in reverse order
+        }
+        cout << endl;
+    }
 
-void convert(char str[]){
-int j,k,len = strlen(str);
-for(j=0, k=0; j<len; j++){
-if( ( (int)str[j] >= 97 && (int)str[j] <=122 ) || ( (int)str[j] >= 65 && (int)str[j] <=90 )){
-if( (int)str[j] <=90 ){
-str[k] = (char)( (int)str[j] + 32 );
-}
-else{
-str[k] = str[j];
-}
-k++;
-}
-}
-str[k]='\0';
-cout<<endl<<"Converted String : "<<str<<"\n";
-}
-void palindrome(){
-char str[max];
+    // Method to convert the string:
+    // 1. Removes non-alphabetic characters
+    // 2. Converts uppercase to lowercase
+    void convert(char str[]) {
+        int k = 0;
+        int len = strlen(str); // Calculate the length of the input string
+        for (int j = 0; j < len; j++) {
+            if (isalpha(str[j])) {  // Check if the character is alphabetic
+                str[k++] = tolower(str[j]); // Convert to lowercase and store
+            }
+        }
+        str[k] = '\0'; // Null-terminate the processed string
+        cout << "\nConverted String: " << str << "\n";
+    }
 
-int i,j;
-for(i=top,j=0; i>=0; i--,j++){
-str[j]=a[i];
-}
-str[j]='\0';
-if(strcmp(str,a) == 0)
-cout<<"\nSTRING IS PLAINDROME!!";
-else
-cout<<"\nSTRING IS NOT PLAINDROME!!!";
-}
+    // Method to check if the string in the stack is a palindrome
+    void palindrome() {
+        bool isPalindrome = true; // Flag to track palindrome status
+        // Compare characters from the start and end of the stack
+        for (int i = 0, j = top; i < j; i++, j--) {
+            if (a[i] != a[j]) { // If any pair of characters doesn't match
+                isPalindrome = false; // Mark as not a palindrome
+                break; // Exit the loop early
+            }
+        }
+        // Print the result
+        if (isPalindrome) {
+            cout << "\nSTRING IS PALINDROME!!\n";
+        } else {
+            cout << "\nSTRING IS NOT PALINDROME!!!\n";
+        }
+    }
 };
-int main()
-{
-STACK obj;
-char str[max];
-int i=0;
-cout<<"\nEnter string to be reversed and check is it palindrome or not : \n\n";
-cin.getline(str , 50);
-obj.convert(str);
-while(str[i] != '\0'){
-obj.push(str[i]);
-i++;
-}
-obj.palindrome();
-obj.reverse();
 
+int main() {
+    STACK obj;        // Create a STACK object
+    char str[MAX];    // Array to hold the input string
+
+    // Prompt the user for input
+    cout << "\nEnter string to be reversed and check if it is a palindrome or not:\n\n";
+    cin.getline(str, MAX); // Read the input string (supports spaces)
+
+    obj.convert(str); // Convert the input string (lowercase, no non-alphabetic characters)
+
+    // Push each character of the converted string onto the stack
+    int i = 0;
+    while (str[i] != '\0') {
+        obj.push(str[i]); // Push each character
+        i++;
+    }
+
+    obj.palindrome(); // Check if the string is a palindrome
+    obj.reverse();    // Display the reversed string
+
+    return 0; // End of program
 }
